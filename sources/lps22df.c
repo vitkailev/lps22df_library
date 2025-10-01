@@ -102,7 +102,7 @@ static int read(LPS22DF_Def *lps, uint8_t addr, uint8_t size) {
  * @param addr is the device address (on I2C bus)
  * @return LPS22DF_Errors values
  */
-int LPS22DF_init(LPS22DF_Def *lps, I2CDef *i2c, uint8_t addr) {
+int LPS22DF_init(LPS22DF_Def *lps, void *i2c, uint8_t addr) {
     if (lps == NULL || i2c == NULL || addr == 0)
         return LPS22DF_WRONG_DATA;
 

@@ -5,8 +5,6 @@
 extern "C" {
 #endif
 
-#include "i2c.h"
-
 enum LPS22DF_Erros {
     LPS22DF_SUCCESS = 0,
 
@@ -51,6 +49,7 @@ typedef union {
         unsigned reset_arp: 1; // Reset AUTOREFP function. 1 - reset
         unsigned autorefp: 1; // Enable AUTOREFP function. 1 - enable
     } fields;
+
     uint8_t full;
 } LPS22DF_InterruptConfiguration_Def;
 
@@ -65,6 +64,7 @@ typedef union {
         unsigned i2c_i3c_dis: 1; // Disable I2C and I3C digital interfaces. 1 - disable
         unsigned int_en_i3c: 1; // Enable INT pin with MIPI I3C. 1 - enable
     } fields;
+
     uint8_t full;
 } LPS22DF_InterfaceControl_Def;
 
@@ -74,6 +74,7 @@ typedef union {
         unsigned odr: 4; // Output data rate selection
         unsigned : 1;
     } fields;
+
     uint8_t full;
 } LPS22DF_Control1_Def;
 
@@ -88,6 +89,7 @@ typedef union {
         unsigned : 1;
         unsigned boot: 1; // Reboot memory content. 1 - reboot memory content
     } fields;
+
     uint8_t full;
 } LPS22DF_Control2_Def;
 
@@ -99,6 +101,7 @@ typedef union {
         unsigned int_h_l: 1; // Select interrupt active-high, active-low. 1 - active-low
         unsigned : 4;
     } fields;
+
     uint8_t full;
 } LPS22DF_Control3_Def;
 
@@ -113,6 +116,7 @@ typedef union {
         unsigned drdy_pls: 1; // Data-ready pulsed on INT pin. 1 - enable data-ready pulsed on INT pin, pulse width around 5 us
         unsigned : 1;
     } fields;
+
     uint8_t full;
 } LPS22DF_Control4_Def;
 
@@ -123,6 +127,7 @@ typedef union {
         unsigned stop_on_wtm: 1; // Stop-on-FIFO watermark.Enables FIFO watermark level use. 1 - enable
         unsigned : 4;
     } fields;
+
     uint8_t full;
 } LPS22DF_FIFOControl_Def;
 
@@ -133,6 +138,7 @@ typedef union {
         unsigned asf_on: 1; // Enables antispike filters. 1 - antispike filters on SCL and SDA lines are always enabled
         unsigned reserved: 2; // !!!VALUE == 2, datasheet!!!
     } fields;
+
     uint8_t full;
 } LPS22DF_I3CInterfaceControl_Def;
 
@@ -144,6 +150,7 @@ typedef union {
         unsigned : 4;
         unsigned boot_on: 1; // Indication that the boot (reboot) phase is running
     } fields;
+
     uint8_t full;
 } LPS22DF_InterruptSource_Def;
 
@@ -154,6 +161,7 @@ typedef union {
         unsigned fifo_ovr_ia: 1; // FIFO overrun status. 1 - FIFO is full and at least one sample in the FIFO has been overwritten
         unsigned fifo_wtm_ia: 1; // FIFO threshold (watermark) status. 1 - FIFO filling is equal or higher than threshold level
     } fields;
+
     uint8_t full;
 } LPS22DF_FIFOStatus2_Def;
 
@@ -171,6 +179,7 @@ typedef union {
         unsigned t_or: 1; // Temperature data overrun. 1 - new data for temperature has overwritten the previous data
         unsigned : 2;
     } fields;
+
     uint8_t full;
 } LPS22DF_Status_Def;
 
@@ -193,10 +202,10 @@ typedef struct {
     float temp; // C
 
     uint8_t devAddr;
-    I2CDef *i2c;
+    void *i2c;
 } LPS22DF_Def;
 
-int LPS22DF_init(LPS22DF_Def *lps, I2CDef *i2c, uint8_t addr);
+int LPS22DF_init(LPS22DF_Def *lps, void *i2c, uint8_t addr);
 
 int LPS22DF_checkConnection(LPS22DF_Def *lps);
 
